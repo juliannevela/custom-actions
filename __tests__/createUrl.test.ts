@@ -1,5 +1,4 @@
 import { expect, it } from '@jest/globals'
-import { TP_API_ENDPOINTS } from '../src/config/tpio.config'
 import useCreateUrl from '../src/hooks/useCreateUrl'
 
 describe('Create URL Hook', () => {

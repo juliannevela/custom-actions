@@ -4,33 +4,47 @@ on:
         branches-ignore: [master, release/*]
     pull_request:
         branches-ignore: [master, release/*]
+    workflow_dispatch:
 jobs:
     build:
         runs-on: ubuntu-latest
-        strategy:
-            matrix:
-                node-version: [12.x, 14.x, 16.x]
         steps:
             - uses: actions/checkout@v3
-            - name: Use Node.js ${{ matrix.node-version }}
+            - name: Use Node.js 14.x
               uses: actions/setup-node@v3
               with:
-                  node-version: ${{ matrix.node-version }}
+                  node-version: 14.x
                   cache: 'npm'
             - run: npm install
             - run: npm run build --if-present
 
     test:
         runs-on: ubuntu-latest
-        strategy:
-            matrix:
-                node-version: [12.x, 14.x, 16.x]
         steps:
             - uses: actions/checkout@v3
-            - name: Use Node.js ${{ matrix.node-version }}
+            - name: Use Node.js 14.x
               uses: actions/setup-node@v3
               with:
-                  node-version: ${{ matrix.node-version }}
+                  node-version: 14.x
                   cache: 'npm'
             - run: npm install
             - run: npm run test --if-present
+
+    run_tpio_jobs:
+        runs-on: ubuntu-latest
+        steps:
+            - name: Checkout
+              uses: actions/checkout@v3
+            - name: Setup Node.js 14.x
+              uses: actions/setup-node@v3
+              with:
+                  node-version: 14.x
+                  cache: 'npm'
+              run: npm ci
+              run: npm all
+            - name: Run TPIO Jobs
+              uses: dist/index.js
+              with:
+                  api_key: ${{ secrets.TP_API_KEY }}
+                  project_id: ${{ env.INPUT_PROJECT_ID }}
+

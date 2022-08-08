@@ -1,9 +1,6 @@
 name: 'Execute TestProject Jobs'
 description: 'GitHub Action to integrate with TestProject to execute jobs'
 author: 'Julianne Vela'
-strategy:
-    matrix:
-        node-version: [12.x, 14.x, 16.x]
 inputs:
     api_key:
         description: 'API Key for TestProject.io with permission to run jobs within this project.'
@@ -31,5 +28,5 @@ inputs:
 runs:
     using: actions/setup-node@v3
     with:
-        - node-version: ${{ matrix.node-version }}
+        - node-version: 14.x
     main: 'dist/index.js'
