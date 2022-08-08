@@ -1,11 +1,35 @@
-name: 'Your name here'
-description: 'Provide a description here'
-author: 'Your name or organization here'
+name: 'Execute TestProject Jobs'
+description: 'GitHub Action to integrate with TestProject to execute jobs'
+author: 'Julianne Vela'
+strategy:
+    matrix:
+        node-version: [12.x, 14.x, 16.x]
 inputs:
-  milliseconds: # change this
-    required: true
-    description: 'input description here'
-    default: 'default value if applicable'
+    api_key:
+        description: 'API Key for TestProject.io with permission to run jobs within this project.'
+        required: true
+    project_id:
+        description: 'The id of the TestProject project that this action will run on.'
+        required: true
+    job_id:
+        description: 'The id of the specific job to run.'
+        required: false
+    test_id:
+        description: 'The id of the specific test to run.'
+        required: false
+    execution_id:
+        description: 'The id of the specific execution to run.'
+        required: false
+    check_interval:
+        description: 'The interval in seconds to check the status of running tests.'
+        required: false
+        default: '15'
+    wait_for_completion:
+        description: 'Whether or not to wait for the job to complete before exiting.'
+        required: false
+        default: true
 runs:
-  using: 'node16'
-  main: 'dist/index.js'
+    using: actions/setup-node@v3
+    with:
+        - node-version: ${{ matrix.node-version }}
+    main: 'dist/index.js'
