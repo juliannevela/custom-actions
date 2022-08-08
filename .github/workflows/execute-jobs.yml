@@ -40,11 +40,12 @@ jobs:
               with:
                   node-version: 14.x
                   cache: 'npm'
-              run: npm ci
-              run: npm all
+            - name: Install
+                run: npm ci
             - name: Run TPIO Jobs
               uses: ./
               with:
                   api_key: ${{ secrets.TP_API_KEY }}
                   project_id: ${{ env.INPUT_PROJECT_ID }}
+              run: npm all
 
