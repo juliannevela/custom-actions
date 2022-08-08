@@ -26,7 +26,5 @@ inputs:
         required: false
         default: true
 runs:
-    using: actions/setup-node@v3
-    with:
-        - node-version: 14.x
+    using: node14
     main: 'dist/index.js'
