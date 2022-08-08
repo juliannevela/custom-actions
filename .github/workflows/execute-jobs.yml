@@ -50,4 +50,3 @@ jobs:
               with:
                   api_key: ${{ secrets.TP_API_KEY }}
                   project_id: ${{ env.INPUT_PROJECT_ID }}
-              run: npm all
